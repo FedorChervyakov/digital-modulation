@@ -1,0 +1,3 @@
+# VIM swap, undo and backup
+*.swp
+*~
