@@ -12,7 +12,7 @@ f_carrier = 10; % Carrier frequency in Hz
 
 w = f_carrier/f_sample; % "Normalized" frequency
 %phi_off = 2*pi*rand();  % Carrier phase offset
-phi_off = pi/2.5;  % Carrier phase offset
+phi_off = 3/4*pi;  % Carrier phase offset
 
 %% "Original" sinewave
 N_periods = 10;                   % Number of periods
@@ -76,7 +76,7 @@ figure(1)
 subplot(2,1,1);
 plot(carrier);
 hold on;
-plot(cosine);
+plot(-cosine);
 legend('Original carrier', 'VCO cosine output');
 title('Costas Loop Input vs output');
 
