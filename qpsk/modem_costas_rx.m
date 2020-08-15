@@ -11,10 +11,10 @@ f_carrier = 1e3; % Carrier frequency in Hz
 T_sym = 10e-3;    % Symbol duration in seconds
 
 % Binary data to transmit
-tx_bin = [1 0 1 1 0 1 ];
+tx_bin = [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1];
 
 %% Introduce phase offset
-phi = pi/3;
+phi = 0;
 
 %% Modulate
 y = qpsk_tx_offset(tx_bin, f_sample, f_carrier, T_sym, phi);

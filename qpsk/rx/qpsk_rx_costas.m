@@ -14,7 +14,7 @@ function [data, I, Q, vco] = qpsk_rx_costas(y, f_sample, f_carrier, T_sym)
     N = length(y);               % Number of input samples
     N_sym = ceil(T_sym*f_sample);% Number of samples per symbol
     w = f_carrier/f_sample;      % normalized frequency
-    alpha = w;               % VCO proportionality constant
+    alpha = w/(2*pi);                   % VCO proportionality constant
 
     % CORDIC VCO Initial conditions
     s = 0;
@@ -24,7 +24,7 @@ function [data, I, Q, vco] = qpsk_rx_costas(y, f_sample, f_carrier, T_sym)
 
     % FIR low-pass filters
     b_lpf = fir1(N_sym, w);   % LPF taps
-    b_loop = fir1(N_sym, w/2);% Loop filter taps
+    b_loop = fir1(N_sym, w);  % Loop filter taps
     zf_i = zeros(N_sym, 1);   % State vector for I filter
     zf_q = zeros(N_sym, 1);   % State vector for Q filter
     zf_vco = zeros(N_sym, 1); % State vector for loop filter
@@ -66,9 +66,12 @@ function [data, I, Q, vco] = qpsk_rx_costas(y, f_sample, f_carrier, T_sym)
 
         % Add I and Q paths
         v_sum = Q_mix - I_mix;
+        %v_sum = I_lpf*sign(Q_lpf) - Q_lpf*sign(I_lpf);
+
 
         % Loop filter
         [v, zf_vco] = filter(b_loop, 1, v_sum, zf_vco);
+        %v = atan((I_mix/Q_mix));
 
         % Output vectors
         I = [I I_lpf];
