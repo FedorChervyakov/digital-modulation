@@ -1,13 +1,13 @@
-% qpsk_rx_matched.m
-% QPSK demodulator using matched filter
+% bpsk_rx_matched.m
+% BPSK demodulator using matched filter
 % Assuming coherent reception
 %
 % Copyright (c) 2020 Fedor Chervyakov
-function [data, I_fil, Q_fil] = qpsk_rx_matched(y, f_sample, f_carrier, T_sym)
+function [data, I_fil, Q_fil] = bpsk_rx_matched(y, f_sample, f_carrier, T_sym)
     % y         - received samples
     % f_sample  - sampling frequency of ADC in Samples/s
     % f_carrier - carrier frequency in Hz
-    % T_sym     - duration of a QPSK symbol in seconds
+    % T_sym     - duration of a BPSK symbol in seconds
     
     % Constants
     N = length(y);               % Number of input samples
@@ -32,15 +32,12 @@ function [data, I_fil, Q_fil] = qpsk_rx_matched(y, f_sample, f_carrier, T_sym)
     % Convert to binary
     data = [];
     for i=1:(length(I_sym))
-        d_i=0;d_q=0;
+        d_i=0;
 
         if I_sym(i)>0
             d_i = 1;
         end;
-        if Q_sym(i)>0
-            d_q = 1;
-        end;
 
-        data = [data d_i d_q];
+        data = [data d_i];
     end
 end

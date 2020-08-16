@@ -1,13 +1,13 @@
-% qpsk_rx.m
-% QPSK demodulator
+% bpsk_rx.m
+% BPSK demodulator
 % Assuming coherent reception
 %
 % Copyright (c) 2020 Fedor Chervyakov
-function [data, I_lpf, Q_lpf] = qpsk_rx(y, f_sample, f_carrier, T_sym)
+function [data, I_lpf, Q_lpf] = bpsk_rx(y, f_sample, f_carrier, T_sym)
     % y         - received samples
     % f_sample  - sampling frequency of ADC in Samples/s
     % f_carrier - carrier frequency in Hz
-    % T_sym     - duration of a QPSK symbol in seconds
+    % T_sym     - duration of a BPSK symbol in seconds
     pkg load signal;             % Required for the fir1
     
     % Constants
@@ -48,15 +48,12 @@ function [data, I_lpf, Q_lpf] = qpsk_rx(y, f_sample, f_carrier, T_sym)
     % Convert to binary
     data = [];
     for i=1:(length(I_avg))
-        d_i=0;d_q=0;
+        d_i=0;
 
         if I_avg(i)>0
             d_i = 1;
         end;
-        if Q_avg(i)>0
-            d_q = 1;
-        end;
 
-        data = [data d_i d_q];
+        data = [data d_i];
     end
 end

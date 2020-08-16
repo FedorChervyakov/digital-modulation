@@ -1,5 +1,5 @@
-% coherent_modem_basic.m
-% Basic coherent QPSK modem demo
+% coherent_modem_matched.m
+% Basic coherent BPSK modem with matched filter receiver demo
 %
 % Copyright (c) 2020 Fedor Chervyakov
 clear; close all; clc;
@@ -14,10 +14,10 @@ T_sym = 5e-3;    % Symbol duration in seconds
 tx_bin = [1 0 1 1 0 1];
 
 %% Modulate
-y = qpsk_tx(tx_bin, f_sample, f_carrier, T_sym);
+y = bpsk_tx(tx_bin, f_sample, f_carrier, T_sym);
 
 %% Demodulate
-[rx_bin, I, Q] = qpsk_rx(y, f_sample, f_carrier, T_sym);
+[rx_bin, I, Q] = bpsk_rx_matched(y, f_sample, f_carrier, T_sym);
 
 
 %% Plots
@@ -34,9 +34,9 @@ plot(I);
 hold on;
 plot(Q);
 grid on;
-title('Receiver I and Q channels after LPF');
+title('Receiver I and Q channels after Matched Filter');
 
 figure(3)
 plot(y)
 grid on;
-title('Trasmitted QPSK waveform');
+title('Trasmitted BPSK waveform');
